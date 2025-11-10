@@ -246,6 +246,7 @@ Firecrawl::shouldReceive('scrape')
 - [Greg Hunt](https://greghunt.dev)
 - [Helge Sverre](https://github.com/HelgeSverre) - Original PHP SDK
 - [Firecrawl](https://firecrawl.dev) - Web scraping service
+- [Claude 4.5 Sonnet](https://claude.ai) - AI agent
 
 ## License
 
