@@ -3,6 +3,7 @@
 namespace GregHunt\LaravelFirecrawl\Tests;
 
 use GregHunt\LaravelFirecrawl\FirecrawlServiceProvider;
+use GregHunt\LaravelFirecrawl\LaravelFirecrawlClient;
 use HelgeSverre\Firecrawl\FirecrawlClient;
 
 class ServiceProviderTest extends TestCase
@@ -25,10 +26,11 @@ class ServiceProviderTest extends TestCase
 
     public function test_firecrawl_client_is_aliased(): void
     {
-        $client1 = $this->app->make(FirecrawlClient::class);
-        $client2 = $this->app->make('firecrawl');
+        $laravelClient = $this->app->make(LaravelFirecrawlClient::class);
+        $aliasedClient = $this->app->make('firecrawl');
 
-        $this->assertSame($client1, $client2);
+        $this->assertSame($laravelClient, $aliasedClient);
+        $this->assertInstanceOf(LaravelFirecrawlClient::class, $aliasedClient);
     }
 
     public function test_config_is_merged(): void

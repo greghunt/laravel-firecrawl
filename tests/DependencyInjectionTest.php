@@ -3,6 +3,7 @@
 namespace GregHunt\LaravelFirecrawl\Tests;
 
 use GregHunt\LaravelFirecrawl\Facades\Firecrawl;
+use GregHunt\LaravelFirecrawl\LaravelFirecrawlClient;
 use HelgeSverre\Firecrawl\FirecrawlClient;
 
 class DependencyInjectionTest extends TestCase
@@ -16,10 +17,10 @@ class DependencyInjectionTest extends TestCase
 
     public function test_injected_client_matches_facade_root(): void
     {
-        $service = $this->app->make(TestService::class);
+        $laravelService = $this->app->make(TestLaravelService::class);
         $facadeClient = Firecrawl::getFacadeRoot();
 
-        $this->assertSame($service->getClient(), $facadeClient);
+        $this->assertSame($laravelService->getClient(), $facadeClient);
     }
 
     public function test_can_resolve_firecrawl_client_from_container(): void
@@ -29,11 +30,18 @@ class DependencyInjectionTest extends TestCase
         $this->assertInstanceOf(FirecrawlClient::class, $client);
     }
 
-    public function test_can_resolve_firecrawl_client_by_alias(): void
+    public function test_can_resolve_laravel_client_by_alias(): void
     {
         $client = $this->app->make('firecrawl');
 
-        $this->assertInstanceOf(FirecrawlClient::class, $client);
+        $this->assertInstanceOf(LaravelFirecrawlClient::class, $client);
+    }
+
+    public function test_can_inject_laravel_client_in_constructor(): void
+    {
+        $service = $this->app->make(TestLaravelService::class);
+
+        $this->assertInstanceOf(LaravelFirecrawlClient::class, $service->getClient());
     }
 }
 
@@ -45,6 +53,19 @@ class TestService
     ) {}
 
     public function getClient(): FirecrawlClient
+    {
+        return $this->client;
+    }
+}
+
+// Test helper class for Laravel wrapper
+class TestLaravelService
+{
+    public function __construct(
+        protected LaravelFirecrawlClient $client
+    ) {}
+
+    public function getClient(): LaravelFirecrawlClient
     {
         return $this->client;
     }

@@ -3,6 +3,7 @@
 namespace GregHunt\LaravelFirecrawl\Tests;
 
 use GregHunt\LaravelFirecrawl\Facades\Firecrawl;
+use GregHunt\LaravelFirecrawl\LaravelFirecrawlClient;
 use HelgeSverre\Firecrawl\FirecrawlClient;
 
 class FacadeTest extends TestCase
@@ -11,7 +12,7 @@ class FacadeTest extends TestCase
     {
         $client = Firecrawl::getFacadeRoot();
 
-        $this->assertInstanceOf(FirecrawlClient::class, $client);
+        $this->assertInstanceOf(LaravelFirecrawlClient::class, $client);
     }
 
     public function test_facade_returns_same_instance(): void
@@ -30,16 +31,25 @@ class FacadeTest extends TestCase
 
         $accessor = $method->invoke(new Firecrawl());
 
-        $this->assertEquals(FirecrawlClient::class, $accessor);
+        $this->assertEquals(LaravelFirecrawlClient::class, $accessor);
     }
 
     public function test_facade_can_access_client_instance(): void
     {
         $this->app['config']->set('firecrawl.api_key', 'test-key');
         $this->app->forgetInstance(FirecrawlClient::class);
+        $this->app->forgetInstance(LaravelFirecrawlClient::class);
 
         $client = Firecrawl::getFacadeRoot();
 
-        $this->assertInstanceOf(FirecrawlClient::class, $client);
+        $this->assertInstanceOf(LaravelFirecrawlClient::class, $client);
+    }
+
+    public function test_facade_can_access_underlying_client(): void
+    {
+        $laravelClient = Firecrawl::getFacadeRoot();
+        $underlyingClient = $laravelClient->getClient();
+
+        $this->assertInstanceOf(FirecrawlClient::class, $underlyingClient);
     }
 }

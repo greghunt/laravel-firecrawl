@@ -16,6 +16,7 @@ class FirecrawlServiceProvider extends ServiceProvider
             __DIR__.'/../config/firecrawl.php', 'firecrawl'
         );
 
+        // Register the base Firecrawl client
         $this->app->singleton(FirecrawlClient::class, function ($app) {
             $config = $app['config']['firecrawl'];
 
@@ -28,7 +29,15 @@ class FirecrawlServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->alias(FirecrawlClient::class, 'firecrawl');
+        // Register the Laravel wrapper client
+        $this->app->singleton(LaravelFirecrawlClient::class, function ($app) {
+            return new LaravelFirecrawlClient(
+                $app->make(FirecrawlClient::class)
+            );
+        });
+
+        // Alias points to the Laravel wrapper for facade usage
+        $this->app->alias(LaravelFirecrawlClient::class, 'firecrawl');
     }
 
     /**
