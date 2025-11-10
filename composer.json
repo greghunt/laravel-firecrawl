@@ -19,6 +19,11 @@
             "GregHunt\\LaravelFirecrawl\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "GregHunt\\LaravelFirecrawl\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
@@ -28,5 +33,13 @@
                 "Firecrawl": "GregHunt\\LaravelFirecrawl\\Facades\\Firecrawl"
             }
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "orchestra/testbench": "^10.0",
+        "mockery/mockery": "^1.6"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }

@@ -40,9 +40,9 @@ All configuration options can be set via environment variables:
 ```env
 FIRECRAWL_API_KEY=your-api-key-here
 FIRECRAWL_API_URL=https://api.firecrawl.dev/
-FIRECRAWL_TIMEOUT=30000
+FIRECRAWL_TIMEOUT_MS=60000
 FIRECRAWL_MAX_RETRIES=3
-FIRECRAWL_RETRY_BACKOFF=2
+FIRECRAWL_BACKOFF_FACTOR=0.5
 ```
 
 ## Usage
@@ -67,12 +67,12 @@ echo $result->html;
 You can also inject the Firecrawl client into your classes:
 
 ```php
-use HelgeSverre\Firecrawl\Firecrawl;
+use HelgeSverre\Firecrawl\FirecrawlClient;
 
 class YourController extends Controller
 {
     public function __construct(
-        protected Firecrawl $firecrawl
+        protected FirecrawlClient $firecrawl
     ) {}
 
     public function scrape()
@@ -226,7 +226,25 @@ try {
 
 ## Testing
 
-To test your implementation, you can mock the Firecrawl facade:
+### Running Package Tests
+
+This package includes a comprehensive test suite. To run the tests:
+
+```bash
+composer test
+```
+
+The test suite includes:
+- Service Provider registration tests
+- Facade functionality tests
+- Configuration tests
+- Dependency injection tests
+
+All tests use Orchestra Testbench to simulate a Laravel environment.
+
+### Testing Your Implementation
+
+When testing your application code that uses this package, you can mock the Firecrawl facade:
 
 ```php
 use GregHunt\LaravelFirecrawl\Facades\Firecrawl;
@@ -239,6 +257,19 @@ Firecrawl::shouldReceive('scrape')
         markdown: '# Test Content',
         success: true,
     ));
+```
+
+Alternatively, you can mock the `FirecrawlClient` in the container:
+
+```php
+use HelgeSverre\Firecrawl\FirecrawlClient;
+use Mockery\MockInterface;
+
+$this->mock(FirecrawlClient::class, function (MockInterface $mock) {
+    $mock->shouldReceive('scrape')
+        ->once()
+        ->andReturn(/* mocked response */);
+});
 ```
 
 ## Credits

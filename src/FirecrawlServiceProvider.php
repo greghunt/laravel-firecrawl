@@ -2,7 +2,7 @@
 
 namespace GregHunt\LaravelFirecrawl;
 
-use HelgeSverre\Firecrawl\Firecrawl;
+use HelgeSverre\Firecrawl\FirecrawlClient;
 use Illuminate\Support\ServiceProvider;
 
 class FirecrawlServiceProvider extends ServiceProvider
@@ -16,19 +16,19 @@ class FirecrawlServiceProvider extends ServiceProvider
             __DIR__.'/../config/firecrawl.php', 'firecrawl'
         );
 
-        $this->app->singleton(Firecrawl::class, function ($app) {
+        $this->app->singleton(FirecrawlClient::class, function ($app) {
             $config = $app['config']['firecrawl'];
 
-            return new Firecrawl(
+            return new FirecrawlClient(
                 apiKey: $config['api_key'],
                 apiUrl: $config['api_url'] ?? null,
-                timeout: $config['timeout'] ?? null,
+                timeoutMs: $config['timeout_ms'] ?? null,
                 maxRetries: $config['max_retries'] ?? null,
-                retryBackoff: $config['retry_backoff'] ?? null,
+                backoffFactor: $config['backoff_factor'] ?? null,
             );
         });
 
-        $this->app->alias(Firecrawl::class, 'firecrawl');
+        $this->app->alias(FirecrawlClient::class, 'firecrawl');
     }
 
     /**

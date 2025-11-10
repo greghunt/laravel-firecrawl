@@ -27,23 +27,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Request Timeout
+    | Request Timeout (Milliseconds)
     |--------------------------------------------------------------------------
     |
-    | The timeout for API requests in milliseconds. Default is null which
-    | uses the SDK's default timeout.
+    | The timeout for API requests in milliseconds. Default is 60000 (60 seconds)
+    | if not specified. Set to null to use the SDK's default.
     |
     */
 
-    'timeout' => env('FIRECRAWL_TIMEOUT'),
+    'timeout_ms' => env('FIRECRAWL_TIMEOUT_MS'),
 
     /*
     |--------------------------------------------------------------------------
     | Max Retries
     |--------------------------------------------------------------------------
     |
-    | The maximum number of retry attempts for failed requests. Default is
-    | null which uses the SDK's default retry behavior.
+    | The maximum number of retry attempts for failed requests. Default is 3
+    | if not specified. Set to null to use the SDK's default.
     |
     */
 
@@ -51,13 +51,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Retry Backoff
+    | Backoff Factor
     |--------------------------------------------------------------------------
     |
-    | The exponential backoff factor for retries. Default is null which uses
-    | the SDK's default backoff behavior.
+    | The exponential backoff multiplier for retries. Default is 0.5 if not
+    | specified. Set to null to use the SDK's default.
     |
     */
 
-    'retry_backoff' => env('FIRECRAWL_RETRY_BACKOFF'),
+    'backoff_factor' => env('FIRECRAWL_BACKOFF_FACTOR'),
 ];

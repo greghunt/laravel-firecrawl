@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \HelgeSverre\Firecrawl\Data\SearchResult search(string $query, array $options = [])
  * @method static \HelgeSverre\Firecrawl\Data\ExtractResult extract(array $urls, array $options = [])
  *
- * @see \HelgeSverre\Firecrawl\Firecrawl
+ * @see \HelgeSverre\Firecrawl\FirecrawlClient
  */
 class Firecrawl extends Facade
 {
@@ -25,6 +25,6 @@ class Firecrawl extends Facade
      */
     protected static function getFacadeAccessor(): string
     {
-        return \HelgeSverre\Firecrawl\Firecrawl::class;
+        return \HelgeSverre\Firecrawl\FirecrawlClient::class;
     }
 }
