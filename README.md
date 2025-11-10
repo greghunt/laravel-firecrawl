@@ -1,5 +1,7 @@
 # Laravel Firecrawl
 
+[![Tests](https://github.com/greghunt/laravel-firecrawl/actions/workflows/tests.yml/badge.svg)](https://github.com/greghunt/laravel-firecrawl/actions/workflows/tests.yml)
+
 A Laravel package wrapper for the [Firecrawl PHP SDK](https://github.com/HelgeSverre/firecrawl-php-sdk), providing a convenient facade and configuration for web scraping and crawling.
 
 ## Requirements
