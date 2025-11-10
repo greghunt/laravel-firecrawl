@@ -1,0 +1,34 @@
+{
+    "name": "greghunt/laravel-firecrawl",
+    "description": "Laravel package wrapper for Firecrawl PHP SDK",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Greg Hunt",
+            "email": "greg@greghunt.dev"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^11.0|^12.0",
+        "helgesverre/firecrawl-php-sdk": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GregHunt\\LaravelFirecrawl\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "GregHunt\\LaravelFirecrawl\\FirecrawlServiceProvider"
+            ],
+            "aliases": {
+                "Firecrawl": "GregHunt\\LaravelFirecrawl\\Facades\\Firecrawl"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
