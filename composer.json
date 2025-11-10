@@ -28,7 +28,5 @@
                 "Firecrawl": "GregHunt\\LaravelFirecrawl\\Facades\\Firecrawl"
             }
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
